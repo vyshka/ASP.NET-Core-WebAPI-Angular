@@ -76,12 +76,8 @@ namespace ACWA.Services.Services
 
         public async Task UpdateUserAsync(UpdateUserRequest model)
         {
-            User user = await _context.Users.FindAsync(model.Id);
-            if (user == null)
-            {
-                throw new ArgumentNullException();
-            }
-            _context.Users.Update(model.ToUser());
+            _context.Entry(model.ToUser()).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }

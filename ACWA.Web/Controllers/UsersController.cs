@@ -23,20 +23,16 @@ namespace ACWA.Web.Controllers
         [HttpGet]
         public async Task<PaginationHelper<UserResponse>> GetUsers([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var totalCount = await _userService.GetUsersCountAsync();
+            int totalCount = await _userService.GetUsersCountAsync();
 
-            var skipAmount = pageSize * (page - 1);
-            var mod = totalCount % pageSize;
-            var totalPageCount = (totalCount / pageSize) + (mod == 0 ? 0 : 1);
-
-            var users = await _userService.GetAllUsersAsync(skipAmount, pageSize);
+            var users = await _userService.GetAllUsersAsync(pageSize * (page - 1), pageSize);
 
             return new PaginationHelper<UserResponse>
             {
                 Entities = users,
                 PageNumber = page,
                 PageSize = pageSize,
-                TotalPages = totalPageCount
+                TotalPages = (totalCount / pageSize) + (totalCount % pageSize == 0 ? 0 : 1)
             };
         }
 
@@ -101,8 +97,8 @@ namespace ACWA.Web.Controllers
             return NoContent();
         }
 
-        // DELETE: api/users/delete
-        [HttpDelete("{delete}")]
+        // DELETE: api/users/id
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
             try

@@ -42,7 +42,6 @@ namespace ACWA.Web
                 app.UseHsts();
             }
 
-            app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
