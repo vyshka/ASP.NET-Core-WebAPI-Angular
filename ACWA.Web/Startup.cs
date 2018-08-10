@@ -22,6 +22,7 @@ namespace ACWA.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors();
 
             services.AddDbContext<ACWAContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -42,7 +43,13 @@ namespace ACWA.Web
                 app.UseHsts();
             }
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
+
+            // For Angular client
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
+
             app.UseMvc();
         }
     }
