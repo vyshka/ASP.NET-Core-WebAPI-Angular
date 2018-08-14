@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { UserApiService } from './users/shared/user-api.service';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { HttpModule } from '@angular/http';
 
@@ -16,7 +17,8 @@ import { HttpModule } from '@angular/http';
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    AngularFontAwesomeModule
   ],
   providers: [
     UserApiService,
