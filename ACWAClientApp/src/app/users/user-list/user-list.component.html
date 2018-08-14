@@ -12,22 +12,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of paginationHelper.entities">
-          <td>{{user.fullName}}</td>
-          <td>{{user.login}}</td>
-          <td>{{user.phoneNumber}}</td>
-          <td class="text-center">{{user.id}}</td>
+        <tr *ngFor="let user of paginationHelper.Entities">
+          <td>{{user.FullName}}</td>
+          <td>{{user.Login}}</td>
+          <td>{{user.PhoneNumber}}</td>
+          <td class="text-center">{{user.Id}}</td>
         </tr>
       </tbody>
     </table>
 
     <br><br><br><br>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item">Page: {{paginationHelper.pageNumber}}</li>
-      <li class="list-group-item">Page Size: {{paginationHelper.pageSize}}</li>
-      <li class="list-group-item">Total Pages: {{paginationHelper.totalPages}}</li>
+      <li class="list-group-item">Page: {{paginationHelper.PageNumber}}</li>
+      <li class="list-group-item">Page Size: {{paginationHelper.PageSize}}</li>
+      <li class="list-group-item">Total Pages: {{paginationHelper.TotalPages}}</li>
     </ul>
   </div>
 
-  <ng-template #noEntitiesBlock>There are no users in the database</ng-template>
+  <ng-template #noEntitiesBlock>
+    <div class="alert alert-danger" role="alert">There are no users in the database.</div>
+  </ng-template>
 </div>

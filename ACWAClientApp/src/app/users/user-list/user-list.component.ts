@@ -3,6 +3,8 @@ import { UserApiService } from '../shared/user-api.service';
 import { PaginationHelper } from '../shared/pagination-helper.model';
 import { UserResponse } from '../shared/user-response.model';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -13,15 +15,26 @@ import { Title } from '@angular/platform-browser';
 export class UserListComponent implements OnInit {
 
   public paginationHelper: PaginationHelper<UserResponse>;
+  private page = 1;
+  private pageSize = 10;
+  private subscription: Subscription;
 
-  constructor(private _userService: UserApiService, private titleService: Title) { }
+  constructor(private _userService: UserApiService,
+    private titleService: Title,
+    private activateRoute: ActivatedRoute) {
+    this.subscription = activateRoute.params.subscribe(params => {
+      console.log(params);
+      console.log(params['page']);
+      this.page = params['page'];
+    });
+  }
 
   ngOnInit() {
-    this.getUsers(1, 10);
+    this.getUsers(this.pageSize, this.page);
     this.setTitle('List of users - ACWA');
   }
 
-  public getUsers(page?: number, pageSize?: number): void {
+  public getUsers(pageSize: number, page?: number): void {
     this._userService.GetUsers(page, pageSize)
       .subscribe(users => this.paginationHelper = users);
   }

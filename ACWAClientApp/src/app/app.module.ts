@@ -8,6 +8,7 @@ import { UserApiService } from './users/shared/user-api.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { HttpModule } from '@angular/http';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { HttpModule } from '@angular/http';
   imports: [
     BrowserModule,
     HttpModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    AppRoutingModule
   ],
   providers: [
     UserApiService,
