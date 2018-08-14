@@ -5,9 +5,7 @@ import { map } from 'rxjs/operators';
 import { PaginationHelper } from './pagination-helper.model';
 import { UserResponse } from './user-response.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class UserApiService {
   constructor(private http: Http) { }
 
@@ -19,7 +17,7 @@ export class UserApiService {
     );
   }
 
-  GetUsers (page?: number, pageSize?: number) {
+  GetUsers (page?: number, pageSize?: number): Observable<PaginationHelper<UserResponse>> {
     let parameters: string;
     if (page != null && pageSize != null) {
       parameters = '?page=' + page + '&pagesize=' + pageSize;
