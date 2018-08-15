@@ -5,13 +5,11 @@ import { map } from 'rxjs/operators';
 import { PaginationHelper } from './pagination-helper.model';
 import { UserResponse } from './user-response.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class UserApiService {
   constructor(private http: Http) { }
 
-  GetUserById(id: string) {
+  GetUserById(id: string): Observable<UserResponse> {
     return this.http.get('/api/users/' + id).pipe(
       map((data: Response) => {
         return data.json() as UserResponse;
@@ -19,16 +17,16 @@ export class UserApiService {
     );
   }
 
-  GetUsers (page?: number, pageSize?: number) {
+  GetUsers (page?: number, pageSize?: number): Observable<PaginationHelper<UserResponse>> {
     let parameters: string;
     if (page != null && pageSize != null) {
       parameters = '?page=' + page + '&pagesize=' + pageSize;
-    } else if (page == null && pageSize == null) {
-      parameters = '';
     } else if (page != null && pageSize == null) {
       parameters = '?page=' + page;
     } else if (page == null && pageSize != null) {
-      parameters = '?pagesize=' + page;
+      parameters = '?pagesize=' + pageSize;
+    } else {
+      parameters = '';
     }
 
     return this.http.get('/api/users' + parameters).pipe(

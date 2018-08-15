@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserApiService } from '../shared/user-api.service';
 import { PaginationHelper } from '../shared/pagination-helper.model';
 import { UserResponse } from '../shared/user-response.model';
+import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -10,15 +13,34 @@ import { UserResponse } from '../shared/user-response.model';
 })
 
 export class UserListComponent implements OnInit {
-  paginationHelper: PaginationHelper<UserResponse>;
 
-  constructor(public _userService: UserApiService) { }
+  public paginationHelper: PaginationHelper<UserResponse>;
+  private subscription: Subscription;
+  private pageSize = 10;
+  private page = 1;
+
+  constructor(private _userService: UserApiService,
+    private titleService: Title,
+    private activateRoute: ActivatedRoute) {
+      console.log('constructor()');
+      this.subscription = this.activateRoute.params.subscribe(params => this.page = params['page']);
+      this.getUsers(this.pageSize, this.page);
+      this.setTitle('List of users - ACWA');
+    }
+
   ngOnInit() {
-
-    const a = this._userService.GetUsers();
-
-    this._userService.GetUsers()
-      .subscribe(data => this.paginationHelper = data);
+    console.log('ngOnInit()');
+    // this.subscription = this.activateRoute.params.subscribe(params => this.page = params['page']);
+    // this.getUsers(this.pageSize, this.page);
+    // this.setTitle('List of users - ACWA');
   }
 
+  public getUsers(pageSize: number, page?: number): void {
+    this._userService.GetUsers(page, pageSize)
+      .subscribe(users => this.paginationHelper = users);
+  }
+
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
+  }
 }

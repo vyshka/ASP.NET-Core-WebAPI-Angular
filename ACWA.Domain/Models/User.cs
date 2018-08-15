@@ -9,7 +9,7 @@ namespace ACWA.Domain.Models
         public string LastName { get; set; }
         public string Login { get; set; }
         public string PhoneNumber { get; set; }
-        public string FullName { get => $"{FirstName} {LastName.ToLower()}"; }
+        public string FullName { get => $"{FirstName} {LastName}"; }
         public string FullNameNormalized { get => (LastName + FirstName).ToLower(); }
     }
 }

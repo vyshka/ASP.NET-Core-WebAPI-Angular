@@ -1,11 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { UserListComponent } from './users/user-list/user-list.component';
+import { UserApiService } from './users/shared/user-api.service';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { HttpModule } from '@angular/http';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,9 +18,15 @@ import { HttpModule } from '@angular/http';
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    AngularFontAwesomeModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    UserApiService,
+    Title
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
