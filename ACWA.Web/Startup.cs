@@ -45,6 +45,12 @@ namespace ACWA.Web
                 app.UseHsts();
             }
 
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<ACWAContext>();
+                context.Database.Migrate();
+            }
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseHttpsRedirection();

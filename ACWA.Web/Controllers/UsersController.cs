@@ -23,6 +23,13 @@ namespace ACWA.Web.Controllers
         [HttpGet]
         public async Task<PaginationHelper<UserResponse>> GetUsers([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
+            // For generate new users
+            //var genUsers = new Generate().GetUsers(50);
+            //foreach (var user in genUsers)
+            //{
+            //    await _userService.AddUserAsync(user);
+            //}
+
             int totalCount = await _userService.GetUsersCountAsync();
 
             var users = await _userService.GetAllUsersAsync(pageSize * (page - 1), pageSize);
