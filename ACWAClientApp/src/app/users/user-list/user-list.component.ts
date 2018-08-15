@@ -22,12 +22,14 @@ export class UserListComponent implements OnInit {
   constructor(private _userService: UserApiService,
     private titleService: Title,
     private activateRoute: ActivatedRoute) {
+      console.log('constructor()');
       this.subscription = this.activateRoute.params.subscribe(params => this.page = params['page']);
       this.getUsers(this.pageSize, this.page);
       this.setTitle('List of users - ACWA');
     }
 
   ngOnInit() {
+    console.log('ngOnInit()');
     // this.subscription = this.activateRoute.params.subscribe(params => this.page = params['page']);
     // this.getUsers(this.pageSize, this.page);
     // this.setTitle('List of users - ACWA');
