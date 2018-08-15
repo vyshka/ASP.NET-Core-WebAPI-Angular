@@ -5,7 +5,7 @@ import { UsersComponent } from './users/users.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/users', pathMatch: 'full' },
+  // { path: '**', redirectTo: 'users', pathMatch: 'full' },
   { path: 'users/:page', component: UserListComponent },
   { path: 'lol/kek', component: UsersComponent }
 ];
@@ -14,4 +14,5 @@ const routes: Routes = [
   imports: [ RouterModule.forRoot(routes) ],
   exports: [ RouterModule ]
 })
+
 export class AppRoutingModule {}

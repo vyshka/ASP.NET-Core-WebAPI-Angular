@@ -1,5 +1,5 @@
 <div id="app-user-list-body">
-  <h1 class="display-3"><fa name="cog" animation="spin"></fa> List of users</h1>
+  <h1 class="display-3"><!--<fa name="cog" animation="spin"></fa> -->List of users</h1>
 
   <div *ngIf="paginationHelper != null; else noEntitiesBlock">
     <table class="table table-striped">
@@ -15,7 +15,7 @@
         <tr *ngFor="let user of paginationHelper.Entities">
           <td>{{user.FullName}}</td>
           <td>{{user.Login}}</td>
-          <td>{{user.PhoneNumber}}</td>
+          <td class="text-center">{{user.PhoneNumber}}</td>
           <td class="text-center">{{user.Id}}</td>
         </tr>
       </tbody>
