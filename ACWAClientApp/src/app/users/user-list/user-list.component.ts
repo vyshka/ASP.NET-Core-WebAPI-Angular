@@ -15,24 +15,17 @@ import { ActivatedRoute } from '@angular/router';
 export class UserListComponent implements OnInit {
 
   public paginationHelper: PaginationHelper<UserResponse>;
-  private subscription: Subscription;
   private pageSize = 10;
   private page = 1;
 
   constructor(private _userService: UserApiService,
     private titleService: Title,
-    private activateRoute: ActivatedRoute) {
-      console.log('constructor()');
-      this.subscription = this.activateRoute.params.subscribe(params => this.page = params['page']);
-      this.getUsers(this.pageSize, this.page);
-      this.setTitle('List of users - ACWA');
-    }
+    private activateRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    console.log('ngOnInit()');
-    // this.subscription = this.activateRoute.params.subscribe(params => this.page = params['page']);
-    // this.getUsers(this.pageSize, this.page);
-    // this.setTitle('List of users - ACWA');
+    this.activateRoute.params.subscribe(params => this.page = params['page']);
+    this.getUsers(this.pageSize, this.page);
+    this.setTitle('List of users - ACWA');
   }
 
   public getUsers(pageSize: number, page?: number): void {
