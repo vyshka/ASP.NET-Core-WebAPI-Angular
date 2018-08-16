@@ -21,12 +21,15 @@
       </tbody>
     </table>
 
-    <br><br><br><br>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Page: {{paginationHelper.PageNumber}}</li>
-      <li class="list-group-item">Page Size: {{paginationHelper.PageSize}}</li>
-      <li class="list-group-item">Total Pages: {{paginationHelper.TotalPages}}</li>
-    </ul>
+    <br><br>
+
+    <app-pagination
+      [totalPages]="paginationHelper.TotalPages"
+      [pageNumber]="paginationHelper.PageNumber"
+      [url]="pageUrl"
+      [pagesToDisplay]="9">
+    </app-pagination>
+
   </div>
 
   <ng-template #noEntitiesBlock>

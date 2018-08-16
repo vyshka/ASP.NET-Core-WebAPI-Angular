@@ -3,7 +3,6 @@ import { UserApiService } from '../shared/user-api.service';
 import { PaginationHelper } from '../shared/pagination-helper.model';
 import { UserResponse } from '../shared/user-response.model';
 import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -15,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class UserListComponent implements OnInit {
 
   public paginationHelper: PaginationHelper<UserResponse>;
+  public pageUrl = '/users';
   private pageSize = 10;
   private page = 1;
 

@@ -10,6 +10,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { PaginationComponent } from './extensions/pagination/pagination.component';
 
+
 const appRoutes: Routes = [
   { path: '', component: UserListComponent },
   { path: 'users', component: UserListComponent },
@@ -26,10 +27,7 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpModule,
     AngularFontAwesomeModule,
-    RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // debugging purposes only
-    )
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [
     UserApiService,
