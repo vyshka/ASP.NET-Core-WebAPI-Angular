@@ -1,38 +1,41 @@
-<div id="app-user-list-body">
-  <h1 class="display-3"><!--<fa name="cog" animation="spin"></fa> -->List of users</h1>
+<h1 class="display-3">List of users</h1>
 
-  <div *ngIf="paginationHelper != null; else noEntitiesBlock">
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col" class="text-center">Full Name</th>
-          <th scope="col" class="text-center">Login</th>
-          <th scope="col" class="text-center">Phone Number</th>
-          <th scope="col" class="text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of paginationHelper.Entities">
+<button type="button" class="btn btn-success create-button">Create</button>
+
+<div *ngIf="paginationHelper != null; else noEntitiesBlock">
+  <table class="table table-striped table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="text-center">Full Name</th>
+        <th scope="col" class="text-center">Login</th>
+        <th scope="col" class="text-center">Phone Number</th>
+        <th scope="col" class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let user of paginationHelper.Entities">
+        <tr (click)="onClickRow(user.Id)">          
           <td>{{user.FullName}}</td>
           <td>{{user.Login}}</td>
           <td class="text-center">{{user.PhoneNumber}}</td>
-          <td class="text-center">{{user.Id}}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-primary action-button">Edit</button>
+            <button type="button" class="btn btn-danger action-button">Delete</button>
+            <!-- {{user.Id}} -->
+          </td>
         </tr>
-      </tbody>
-    </table>
+      </ng-container>
+    </tbody>
+  </table>
 
-    <br><br>
-
-    <app-pagination
-      [totalPages]="paginationHelper.TotalPages"
-      [pageNumber]="paginationHelper.PageNumber"
-      [url]="pageUrl"
-      [pagesToDisplay]="9">
-    </app-pagination>
-
-  </div>
-
-  <ng-template #noEntitiesBlock>
-    <div class="alert alert-danger" role="alert">There are no users in the database.</div>
-  </ng-template>
+  <app-pagination
+    [totalPages]="paginationHelper.TotalPages"
+    [pageNumber]="paginationHelper.PageNumber"
+    [url]="pageUrl"
+    [pagesToDisplay]="9">
+  </app-pagination>
 </div>
+
+<ng-template #noEntitiesBlock>
+  <div class="alert alert-danger" role="alert">There are no users in the database.</div>
+</ng-template>

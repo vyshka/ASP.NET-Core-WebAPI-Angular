@@ -1,0 +1,33 @@
+<h1 class="display-3">User details</h1>
+
+<div *ngIf="user != null; else noEntityBlock" class="row">
+  <div class="col-sm-9 col-lg-10">
+    <table class="table">
+      <tbody>
+        <tr>
+          <th scope="row" style="border-top:0">Full name:</th>
+          <td style="border-top:0">{{user.FullName}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Login:</th>
+          <td>{{user.Login}}</td>
+        </tr>
+        <tr>
+          <th scope="row">Phone number:</th>
+          <td>{{user.PhoneNumber}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-3 col-lg-2 align-self-center">
+    <button type="button" class="btn btn-primary">Edit</button>
+    <div class="w-100"></div>
+    <button type="button" class="btn btn-danger">Delete</button>
+    <div class="w-100"></div>
+    <button type="button" routerLink="{{returnUrl}}" class="btn btn-dark">Back to list</button>
+  </div>
+</div>
+
+<ng-template #noEntityBlock>
+  <div class="alert alert-danger" role="alert">There are no user with this ID.</div>
+</ng-template>
