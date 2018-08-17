@@ -4,12 +4,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginationHelper } from './pagination-helper.model';
 import { UserResponse } from './user-response.model';
+import { AddUserRequest } from './add-user-request.model';
 
 @Injectable()
 export class UserApiService {
   constructor(private http: Http) { }
 
-  GetUserById(id: string): Observable<UserResponse> {
+  public GetUserById(id: string): Observable<UserResponse> {
     return this.http.get('/api/users/' + id).pipe(
       map((data: Response) => {
         return data.json() as UserResponse;
@@ -17,7 +18,7 @@ export class UserApiService {
     );
   }
 
-  GetUsers (page?: number, pageSize?: number): Observable<PaginationHelper<UserResponse>> {
+  public GetUsers (page?: number, pageSize?: number): Observable<PaginationHelper<UserResponse>> {
     let parameters: string;
     if (page != null && pageSize != null) {
       parameters = '?page=' + page + '&pagesize=' + pageSize;
@@ -34,5 +35,15 @@ export class UserApiService {
         return data.json() as PaginationHelper<UserResponse>;
       })
     );
+  }
+
+  public DeleteUser(id: string): void {
+    this.http.delete('/api/users/' + id)
+      .subscribe(() => {});
+  }
+
+  public AddUser(model: AddUserRequest): void {
+    this.http.post('api/users/add', model)
+      .subscribe(() => {});
   }
 }

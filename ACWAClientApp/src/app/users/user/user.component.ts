@@ -25,7 +25,6 @@ export class UserComponent implements OnInit {
       .subscribe(x => {
         this.userId = x['id'];
         this.returnUrl = x['returnUrl'];
-        console.log(x);
     });
     this.getUser(this.userId);
     this.setTitle('About - ACWA');

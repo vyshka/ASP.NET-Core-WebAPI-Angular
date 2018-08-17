@@ -6,13 +6,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { UserListComponent } from './users/user-list/user-list.component';
 import { UserComponent } from './users/user/user.component';
+import { AddUserComponent } from './users/add-user/add-user.component';
 
 import { UserApiService } from './users/shared/user-api.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { PaginationComponent } from './extensions/pagination/pagination.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDeleteComponent } from './extensions/modal-delete/modal-delete.component';
 
 const appRoutes: Routes = [
   { path: '', component: UserListComponent },
+  { path: 'users/add', component: AddUserComponent },
   { path: 'users', component: UserListComponent },
   { path: 'users/:page', component: UserListComponent },
   { path: 'user/:id/:returnUrl', component: UserComponent }
@@ -23,17 +27,23 @@ const appRoutes: Routes = [
     AppComponent,
     UserListComponent,
     PaginationComponent,
-    UserComponent
+    UserComponent,
+    ModalDeleteComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     AngularFontAwesomeModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    NgbModule
   ],
   providers: [
     UserApiService,
     Title
+  ],
+  entryComponents: [
+    ModalDeleteComponent
   ],
   bootstrap: [AppComponent]
 })
