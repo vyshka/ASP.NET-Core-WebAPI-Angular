@@ -1,3 +1,60 @@
-<p>
-  add-user works!
-</p>
+<h1 class="display-3">Adding a new user</h1>
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmitUserForm()">
+  <div class="row">
+    <div class="col-12 col-sm-6">
+      <div class="form-group">
+        <label for="first-name-input">First Name</label>
+        <input type="text" formControlName="FirstName" class="form-control" id="first-name-input" placeholder="Enter first name">
+        <div *ngIf="(userForm.controls['FirstName'].invalid && userForm.controls['FirstName'].touched) || (userForm.controls['FirstName'].invalid && showAllErrors)" class="invalid-tooltip">
+          The first name is required and must be between 2 and 64 characters.
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6">
+      <div class="form-group">
+        <label for="last-name-input">Last Name</label>
+        <input type="text" formControlName="LastName" class="form-control" id="last-name-input" placeholder="Enter last name">
+        <div *ngIf="(userForm.controls['LastName'].invalid && userForm.controls['LastName'].touched) || (userForm.controls['LastName'].invalid && showAllErrors)" class="text-right invalid-tooltip">
+          The last name is required and must be between 2 and 64 characters.
+        </div>
+      </div>
+    </div>
+    <div class="w-100"></div>
+    <div class="col-12 col-sm-6">
+      <div class="form-group">
+        <label for="login-input">Login</label>
+        <input type="text" formControlName="Login" class="form-control" id="login-input" placeholder="Enter login">
+        <div *ngIf="(userForm.controls['Login'].invalid && userForm.controls['Login'].touched) || (userForm.controls['Login'].invalid && showAllErrors)" class="invalid-tooltip">
+          The login is required and must be between 2 and 32 characters.
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6">
+      <div class="form-group">
+        <label for="phone-number-input">Phone Number</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="phone-number-addon">+375</span>
+          </div>
+          <input type="text" formControlName="PhoneNumber" class="form-control" id="phone-number-input" aria-describedby="phone-number-addon">
+          <div *ngIf="(userForm.controls['PhoneNumber'].invalid && userForm.controls['PhoneNumber'].touched) || (userForm.controls['PhoneNumber'].invalid && showAllErrors)" class="invalid-tooltip">
+            The phone number is required and must be between 9 and 32 characters.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-8 col-lg-5">
+      <div class="row">
+        <div class="col-6">
+          <button type="submit" class="btn btn-primary">Add a new user</button>
+        </div>
+        <div class="col-6">
+          <button type="button" routerLink="/users" class="btn btn-dark">Back to list</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

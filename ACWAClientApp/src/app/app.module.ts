@@ -2,6 +2,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { UserListComponent } from './users/user-list/user-list.component';
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
     HttpModule,
     AngularFontAwesomeModule,
     RouterModule.forRoot(appRoutes),
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [
     UserApiService,
