@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { UserApiService } from '../shared/user-api.service';
 import { UserResponse } from '../shared/user-response.model';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDeleteComponent } from './../../extensions/modal-delete/modal-delete.component';
 
 @Component({
   selector: 'app-user',
@@ -11,17 +13,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class UserComponent implements OnInit {
-  constructor(
-    private userService: UserApiService,
+  constructor(private userService: UserApiService,
     private titleService: Title,
-    private activateRoute: ActivatedRoute) {}
+    private activatedRoute: ActivatedRoute,
+    private modalService: NgbModal,
+    private router: Router) {}
 
   private userId: string;
   public returnUrl: string;
   public user: UserResponse;
 
   ngOnInit() {
-    this.activateRoute.params
+    this.activatedRoute.params
       .subscribe(x => {
         this.userId = x['id'];
         this.returnUrl = x['returnUrl'];
@@ -30,12 +33,26 @@ export class UserComponent implements OnInit {
     this.setTitle('About - ACWA');
   }
 
-  getUser(id: string) {
+  public openDeleteModal(userId: string, userFullName: string): void {
+    const modalRef = this.modalService.open(ModalDeleteComponent);
+    modalRef.componentInstance.itemDescription = userFullName;
+    modalRef.componentInstance.itemId = userId;
+    modalRef.result.then(x => this.deleteUser(x));
+  }
+
+  private getUser(id: string) {
     this.userService.GetUserById(id)
       .subscribe(x => this.user = x);
   }
 
-  public setTitle(newTitle: string) {
+  private deleteUser(userId: string): void {
+    if (userId != null && userId !== '') {
+      this.userService.DeleteUser(userId);
+      this.router.navigate([this.returnUrl]);
+    }
+  }
+
+  private setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
   }
 }

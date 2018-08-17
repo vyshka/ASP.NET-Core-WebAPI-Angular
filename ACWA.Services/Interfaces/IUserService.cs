@@ -13,6 +13,7 @@ namespace ACWA.Services.Interfaces
         Task<List<UserResponse>> GetAllUsersAsync(int? skip = null, int? take = null);
         Task<UserResponse> GetUserByIdAsync(Guid id);
         Task<int> GetUsersCountAsync();
+        Task<UserEditResponse> GetUserForEditByIdAsync(Guid id);
         Task UpdateUserAsync(UpdateUserRequest model);
     }
 }

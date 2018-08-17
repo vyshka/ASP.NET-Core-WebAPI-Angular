@@ -62,6 +62,25 @@ namespace ACWA.Web.Controllers
             return Ok(user);
         }
 
+        // GET: api/users/full/id
+        [HttpGet("full/{id}")]
+        public async Task<IActionResult> GetUserForEdit([FromRoute] Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userService.GetUserForEditByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
         // PUT: api/users/update
         [HttpPut("{update}")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest model)

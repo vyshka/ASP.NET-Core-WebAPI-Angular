@@ -69,6 +69,17 @@ namespace ACWA.Services.Services
             return user.ToUserResponse();
         }
 
+        public async Task<UserEditResponse> GetUserForEditByIdAsync(Guid id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            return user.ToUserEditResponse();
+        }
+
         public async Task<int> GetUsersCountAsync()
         {
             return await _context.Users.CountAsync();

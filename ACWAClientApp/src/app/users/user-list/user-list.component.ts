@@ -3,8 +3,7 @@ import { UserApiService } from '../shared/user-api.service';
 import { PaginationHelper } from '../shared/pagination-helper.model';
 import { UserResponse } from '../shared/user-response.model';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDeleteComponent } from './../../extensions/modal-delete/modal-delete.component';
 
@@ -23,12 +22,12 @@ export class UserListComponent implements OnInit {
 
   constructor(private userService: UserApiService,
     private titleService: Title,
-    private activateRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal) {}
 
   ngOnInit() {
-    this.activateRoute.params
+    this.activatedRoute.params
       .subscribe(x => this.page = x['page']);
     this.getUsers(this.pageSize, this.page);
     this.setTitle('List of users - ACWA');

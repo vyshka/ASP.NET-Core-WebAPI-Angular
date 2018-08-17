@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { PaginationHelper } from './pagination-helper.model';
 import { UserResponse } from './user-response.model';
 import { AddUserRequest } from './add-user-request.model';
+import { User } from './user.model';
 
 @Injectable()
 export class UserApiService {
@@ -14,6 +15,14 @@ export class UserApiService {
     return this.http.get('/api/users/' + id).pipe(
       map((data: Response) => {
         return data.json() as UserResponse;
+      })
+    );
+  }
+
+  public GetUserForEditById(id: string): Observable<User> {
+    return this.http.get('/api/users/full/' + id).pipe(
+      map((data: Response) => {
+        return data.json() as User;
       })
     );
   }

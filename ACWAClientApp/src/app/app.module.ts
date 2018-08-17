@@ -18,6 +18,7 @@ import { ModalDeleteComponent } from './extensions/modal-delete/modal-delete.com
 const appRoutes: Routes = [
   { path: '', component: UserListComponent },
   { path: 'users/add', component: AddUserComponent },
+  { path: 'users/edit/:id', component: AddUserComponent },
   { path: 'users', component: UserListComponent },
   { path: 'users/:page', component: UserListComponent },
   { path: 'user/:id/:returnUrl', component: UserComponent }

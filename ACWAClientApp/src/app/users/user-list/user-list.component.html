@@ -21,7 +21,7 @@
           <td class="align-middle">{{user.Login}}</td>
           <td class="text-center align-middle">{{user.PhoneNumber}}</td>
           <td class="text-center align-middle">
-            <button type="button" class="btn btn-primary action-button">Edit</button>
+            <button type="button" class="btn btn-primary action-button" routerLink="/users/edit/{{user.Id}}">Edit</button>
             <button type="button" class="btn btn-danger action-button" (click)="openDeleteModal(user.Id, user.FullName)">Delete</button>
           </td>
         </tr>
