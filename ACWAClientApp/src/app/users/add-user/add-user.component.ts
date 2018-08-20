@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserApiService } from './../shared/user-api.service';
 import { User } from './../shared/user.model';
+import { UpdateUserRequest } from '../shared/update-user-request.model';
 
 @Component({
   selector: 'app-add-user',
@@ -55,38 +56,40 @@ export class AddUserComponent implements OnInit {
 
   public onSubmitUserForm(): void {
     if (!this.userForm.invalid) {
-      this.userForm.value['PhoneNumber'] = '+375 ' + this.userForm.value['PhoneNumber'];
-      this.userService.AddUser(this.userForm.value);
-      this.router.navigate(['/users']);
+      if (this.user == null) {
+        this.userForm.value['PhoneNumber'] = '+375' + this.userForm.value['PhoneNumber'];
+        this.userService.AddUser(this.userForm.value);
+        this.router.navigate(['/users']);
+      } else {
+        const model: UpdateUserRequest = {
+          Id: this.user.Id,
+          FirstName: this.userForm.value['FirstName'],
+          LastName: this.userForm.value['LastName'],
+          Login: this.userForm.value['Login'],
+          PhoneNumber: '+375' + this.userForm.value['PhoneNumber']
+        };
+        this.userService.UpdateUser(model);
+        this.router.navigate(['/users']);
+      }
     } else {
       this.showAllErrors = true;
     }
   }
 
-  private getUser(id: string): void {
+  private getUser(id: string) {
     this.userService.GetUserForEditById(id)
-      .subscribe(x => this.user = x);
-
-    console.log(this.user);
-    if (this.user != null) {
-      this.FillFormForEdit();
-    }
+      .subscribe(x => this.user = x, () => {}, () => this.fillFormForEdit());
   }
 
-  // this.user.Id = x.Id;
-  // this.user.FirstName = x.FirstName;
-  // this.user.LastName = x.LastName;
-  // this.user.Login = x.Login;
-  // this.user.PhoneNumber = x.PhoneNumber;
-
-  private FillFormForEdit(): void {
-    this.userForm.setValue({
-      FirstName: this.user.FirstName,
-      LastName: this.user.LastName,
-      Login: this.user.Login,
-      PhoneNumber: this.user.PhoneNumber.substring(4) // Removing '+375'
-    });
-
+  private fillFormForEdit(): void {
+    if (this.user != null) {
+      this.userForm.setValue({
+        FirstName: this.user.FirstName,
+        LastName: this.user.LastName,
+        Login: this.user.Login,
+        PhoneNumber: this.user.PhoneNumber.substring(4) // Removing '+375'
+      });
+    }
   }
 
   private setTitle(newTitle: string): void {

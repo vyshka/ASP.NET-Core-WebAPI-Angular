@@ -6,6 +6,7 @@ import { PaginationHelper } from './pagination-helper.model';
 import { UserResponse } from './user-response.model';
 import { AddUserRequest } from './add-user-request.model';
 import { User } from './user.model';
+import { UpdateUserRequest } from './update-user-request.model';
 
 @Injectable()
 export class UserApiService {
@@ -52,7 +53,12 @@ export class UserApiService {
   }
 
   public AddUser(model: AddUserRequest): void {
-    this.http.post('api/users/add', model)
+    this.http.post('/api/users/add', model)
+      .subscribe(() => {});
+  }
+
+  public UpdateUser(model: UpdateUserRequest): void {
+    this.http.put('/api/users/update', model)
       .subscribe(() => {});
   }
 }
