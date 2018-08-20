@@ -2,12 +2,14 @@
 using ACWA.Services.TransportModels.User.Request;
 using ACWA.Services.TransportModels.User.Response;
 using ACWA.Web.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace ACWA.Web.Controllers
 {
+    [Authorize(Policy = "ApiUser")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
