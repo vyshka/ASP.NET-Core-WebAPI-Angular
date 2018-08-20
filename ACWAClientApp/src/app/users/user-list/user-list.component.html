@@ -1,35 +1,42 @@
-<div id="app-user-list-body">
-  <h1 class="display-3"><!--<fa name="cog" animation="spin"></fa> -->List of users</h1>
+<h1 class="display-3">List of users</h1>
 
-  <div *ngIf="paginationHelper != null; else noEntitiesBlock">
-    <table class="table table-striped">
-      <thead class="thead-dark">
+<button type="button" routerLink="/users/add" class="btn btn-success create-button">Create</button>
+
+<div *ngIf="paginationHelper != null; else noEntitiesBlock">
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" class="text-center">№</th>
+        <th scope="col" class="text-center">Full Name</th>
+        <th scope="col" class="text-center">Login</th>
+        <th scope="col" class="text-center">Phone Number</th>
+        <th scope="col" class="text-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let user of paginationHelper.Entities; index as i">
         <tr>
-          <th scope="col" class="text-center">Full Name</th>
-          <th scope="col" class="text-center">Login</th>
-          <th scope="col" class="text-center">Phone Number</th>
-          <th scope="col" class="text-center">Actions</th>
+          <th class="text-center align-middle" scope="row">{{(paginationHelper.PageNumber - 1) * paginationHelper.PageSize + (i + 1)}}</th>
+          <td class="align-middle"><a [routerLink]="" (click)="onClickRow(user.Id)">{{user.FullName}}</a></td>
+          <td class="align-middle">{{user.Login}}</td>
+          <td class="text-center align-middle">{{user.PhoneNumber}}</td>
+          <td class="text-center align-middle">
+            <button type="button" class="btn btn-primary action-button" routerLink="/users/edit/{{user.Id}}">Edit</button>
+            <button type="button" class="btn btn-danger action-button" (click)="openDeleteModal(user.Id, user.FullName)">Delete</button>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of paginationHelper.Entities">
-          <td>{{user.FullName}}</td>
-          <td>{{user.Login}}</td>
-          <td class="text-center">{{user.PhoneNumber}}</td>
-          <td class="text-center">{{user.Id}}</td>
-        </tr>
-      </tbody>
-    </table>
+      </ng-container>
+    </tbody>
+  </table>
 
-    <br><br><br><br>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Page: {{paginationHelper.PageNumber}}</li>
-      <li class="list-group-item">Page Size: {{paginationHelper.PageSize}}</li>
-      <li class="list-group-item">Total Pages: {{paginationHelper.TotalPages}}</li>
-    </ul>
-  </div>
-
-  <ng-template #noEntitiesBlock>
-    <div class="alert alert-danger" role="alert">There are no users in the database.</div>
-  </ng-template>
+  <app-pagination
+    [totalPages]="paginationHelper.TotalPages"
+    [pageNumber]="paginationHelper.PageNumber"
+    [url]="pageUrl"
+    [pagesToDisplay]="9">
+  </app-pagination>
 </div>
+
+<ng-template #noEntitiesBlock>
+  <div class="alert alert-danger" role="alert">There are no users in the database.</div>
+</ng-template>

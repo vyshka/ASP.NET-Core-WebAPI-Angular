@@ -1,0 +1,55 @@
+<ng-container *ngIf="pages.length > 0">
+  <ul class="pagination justify-content-center" *ngIf="totalPages <= pagesToDisplay">
+    <ng-container *ngIf="pageNumber != 1; else disablePrevious">
+      <li class="page-item"><a class="page-link" href="{{url + '/' + (pageNumber - 1)}}">Previous</a></li>
+    </ng-container>
+    <ng-template #disablePrevious>
+      <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+    </ng-template>
+
+    <ng-container *ngFor="let page of pages; index as i">
+      <ng-container *ngIf="pageNumber != pages[i]; else activeLink">
+        <li class="page-item"><a class="page-link" href="{{url + '/' + pages[i]}}">{{pages[i]}}</a></li>
+      </ng-container>
+      <ng-template #activeLink>
+        <li class="page-item active"><a class="page-link" href="{{url + '/' + pages[i]}}">{{pages[i]}} <span class="sr-only">(current)</span></a></li>
+      </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="pageNumber != totalPages; else disableNext">
+      <li class="page-item"><a class="page-link" href="{{url + '/' + (pageNumber + 1)}}">Next</a></li>
+    </ng-container>
+    <ng-template #disableNext>
+      <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Next</a></li>
+    </ng-template>
+  </ul>
+
+  <ul class="pagination justify-content-center" *ngIf="totalPages > pagesToDisplay">
+    <ng-container *ngIf="pageNumber != 1; else disablePrevious">
+      <li class="page-item"><a class="page-link" href="{{url + '/1'}}"><fa name="angle-double-left"></fa></a></li>
+      <li class="page-item"><a class="page-link" href="{{url + '/' + (pageNumber - 1)}}"><fa name="angle-left"></fa></a></li>
+    </ng-container>
+    <ng-template #disablePrevious>
+      <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"><fa name="angle-double-left"></fa></a></li>
+      <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"><fa name="angle-left"></fa></a></li>
+    </ng-template>
+
+    <ng-container *ngFor="let page of pages; index as i">
+      <ng-container *ngIf="pageNumber != pages[i]; else activeLink">
+        <li class="page-item"><a class="page-link" href="{{url + '/' + pages[i]}}">{{pages[i]}}</a></li>
+      </ng-container>
+      <ng-template #activeLink>
+        <li class="page-item active"><a class="page-link" href="{{url + '/' + pages[i]}}">{{pages[i]}} <span class="sr-only">(current)</span></a></li>
+      </ng-template>
+    </ng-container>
+
+    <ng-container *ngIf="pageNumber != totalPages; else disableNext">
+      <li class="page-item"><a class="page-link" href="{{url + '/' + (pageNumber + 1)}}"><fa name="angle-right"></fa></a></li>
+      <li class="page-item"><a class="page-link" href="{{url + '/' + totalPages}}"><fa name="angle-double-right"></fa></a></li>
+    </ng-container>
+    <ng-template #disableNext>
+      <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"><fa name="angle-right"></fa></a></li>
+      <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"><fa name="angle-double-right"></fa></a></li>
+    </ng-template>
+  </ul>
+</ng-container>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserApiService } from '../shared/user-api.service';
-import { PaginationHelper } from '../shared/pagination-helper.model';
 import { UserResponse } from '../shared/user-response.model';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,33 +7,30 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalDeleteComponent } from './../../extensions/modal-delete/modal-delete.component';
 
 @Component({
-  selector: 'app-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
 })
 
-export class UserListComponent implements OnInit {
-
-  public paginationHelper: PaginationHelper<UserResponse>;
-  public pageUrl = '/users';
-  private pageSize = 20;
-  private page = 1;
-
+export class UserComponent implements OnInit {
   constructor(private userService: UserApiService,
     private titleService: Title,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private modalService: NgbModal) {}
+    private modalService: NgbModal,
+    private router: Router) {}
+
+  private userId: string;
+  public returnUrl: string;
+  public user: UserResponse;
 
   ngOnInit() {
     this.activatedRoute.params
-      .subscribe(x => this.page = x['page']);
-    this.getUsers(this.pageSize, this.page);
-    this.setTitle('List of users - ACWA');
-  }
-
-  public onClickRow(userId: number): void {
-    this.router.navigate(['/user', userId, '/users/' + this.paginationHelper.PageNumber]);
+      .subscribe(x => {
+        this.userId = x['id'];
+        this.returnUrl = x['returnUrl'];
+    });
+    this.getUser(this.userId);
+    this.setTitle('About - ACWA');
   }
 
   public openDeleteModal(userId: string, userFullName: string): void {
@@ -44,19 +40,19 @@ export class UserListComponent implements OnInit {
     modalRef.result.then(x => this.deleteUser(x));
   }
 
-  private getUsers(pageSize: number, page?: number): void {
-    this.userService.GetUsers(page, pageSize)
-      .subscribe(x => this.paginationHelper = x);
-  }
-
-  private setTitle(newTitle: string): void {
-    this.titleService.setTitle(newTitle);
+  private getUser(id: string) {
+    this.userService.GetUserById(id)
+      .subscribe(x => this.user = x);
   }
 
   private deleteUser(userId: string): void {
     if (userId != null && userId !== '') {
       this.userService.DeleteUser(userId);
-      location.reload();
+      this.router.navigate([this.returnUrl]);
     }
+  }
+
+  private setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
 }

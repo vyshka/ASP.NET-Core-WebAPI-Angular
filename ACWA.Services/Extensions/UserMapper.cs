@@ -19,6 +19,18 @@ namespace ACWA.Services.Extensions
             };
         }
 
+        public static UserEditResponse ToUserEditResponse(this User model)
+        {
+            return new UserEditResponse()
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Login = model.Login,
+                PhoneNumber = model.PhoneNumber
+            };
+        }
+
         public static List<UserResponse> ToUserResponseList(this List<User> models)
         {
             List<UserResponse> userResponsesList = new List<UserResponse>();

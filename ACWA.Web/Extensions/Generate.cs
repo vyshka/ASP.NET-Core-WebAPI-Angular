@@ -100,7 +100,7 @@ namespace ACWA.Web.Extensions
                     FirstName = fnames[random.Next(0, fnames.Length)],
                     LastName = lnames[random.Next(0, lnames.Length)],
                     Login = logins[random.Next(0, logins.Length)],
-                    PhoneNumber = $"+375 ({phoneCodes[random.Next(0, phoneCodes.Length)]}) {random.Next(0, 10)}{random.Next(0, 10)}{random.Next(0, 10)}-{random.Next(0, 10)}{random.Next(0, 10)}-{random.Next(0, 10)}{random.Next(0, 10)}"
+                    PhoneNumber = $"+375 ({phoneCodes[random.Next(0, phoneCodes.Length)]}) {random.Next(1, 10)}{random.Next(0, 10)}{random.Next(0, 10)}-{random.Next(0, 10)}{random.Next(0, 10)}-{random.Next(0, 10)}{random.Next(0, 10)}"
                 });
             }
             return users;

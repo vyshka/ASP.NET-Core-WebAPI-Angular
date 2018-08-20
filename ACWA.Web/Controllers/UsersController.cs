@@ -2,12 +2,14 @@
 using ACWA.Services.TransportModels.User.Request;
 using ACWA.Services.TransportModels.User.Response;
 using ACWA.Web.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
 namespace ACWA.Web.Controllers
 {
+    [Authorize(Policy = "ApiUser")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -53,6 +55,25 @@ namespace ACWA.Web.Controllers
             }
 
             var user = await _userService.GetUserByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+        // GET: api/users/full/id
+        [HttpGet("full/{id}")]
+        public async Task<IActionResult> GetUserForEdit([FromRoute] Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userService.GetUserForEditByIdAsync(id);
 
             if (user == null)
             {
